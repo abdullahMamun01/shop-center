@@ -4,19 +4,21 @@ import { calculateCurrentPrice } from '@/utils/calculateCurrentPrice'
 import Image from 'next/image'
 
 const SingleProduct = ({productId}) => {
+  
     const singleProduct = productData.products.find(pd => pd.id == productId)
     const currentPrice = calculateCurrentPrice(singleProduct.price,singleProduct.discountPercentage)
-  
+    const ratings = Array(Math.floor(singleProduct.rating)).fill(0)
+
   return (
     <main className="min-h-screen ">
     <section className="bg-[#fafaf2] h-full py-20">
       <div className="w-11/12 lg:w-8/12 max-w-7xl mx-auto flex flex-col gap-12 lg:flex-row items-center justify-between">
         <div className="w-full lg:w-7/12 border border-slate-500/20 p-4">
-          <img  src={singleProduct.thumbnail} className="w-[400px] h-[500px] mx-auto object-cover" alt="" />
+          <Image  src={`${singleProduct.thumbnail}`} width={400} height={500}  className="w-[400px] h-[500px] mx-auto object-cover" alt="" />
 
           <div className="flex gap-4 mt-4">
             {singleProduct.images.map((img,i) =>  (
-                 <img key={i}  src={img} className="w-[100px] h-[100px] mx-auto border object-cover" alt="" />
+                 <Image  key={i}  src={`${img}`} className="w-[100px] h-[100px] mx-auto border object-cover" width={100} height={100} alt="" />
             ))}
            
           </div>
@@ -25,8 +27,11 @@ const SingleProduct = ({productId}) => {
           <h1 className="italic text-xl lg:text-3xl font-serif font-semibold"> {singleProduct.title}</h1>
           <span className="text-[#919090] my-3">{singleProduct.category}</span>
           <div className="mt-3 flex items-center justify-start gap-1">
-            <Image  src="" width={20} alt="" />
-       
+
+            {
+              ratings.map((_,idx) => (<Image key={idx}  src="/svg/star.svg" width={20} height={20} alt="" />))
+            }
+                
           </div>
           <hr className="my-5 bg-black" />
 
